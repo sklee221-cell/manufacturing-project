@@ -3,906 +3,3633 @@
 
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Manufacturing Analysis Project</title>
+    <title>Spring Manufacturing Analysis Project</title>
 
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* =====================================================
+           BASIC SETTINGS
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Pretendard,
+                "Noto Sans KR",
+                Arial,
+                sans-serif;
+
+            color: #222;
+            background: #f7f8fa;
+            line-height: 1.7;
+        }
+
+        img {
+            width: 100%;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            min-height: 70vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    rgba(15, 23, 42, 0.82),
+                    rgba(15, 23, 42, 0.82)
+                ),
+                url("images/hero.jpg");
+
+            background-size: cover;
+            background-position: center;
+
+            color: white;
+        }
+
+        .hero-content {
+            width: 90%;
+            max-width: 900px;
+        }
+
+        .project-label {
+            font-size: 14px;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 7vw, 82px);
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero-description {
+            font-size: 23px;
+            margin-bottom: 10px;
+        }
+
+        .hero-small {
+            font-size: 14px;
+            opacity: 0.75;
+        }
+
+
+        /* =====================================================
+           NAVIGATION
+        ===================================================== */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: rgba(255, 255, 255, 0.97);
+
+            border-bottom: 1px solid #ddd;
+
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-inner {
+            max-width: 1300px;
+            margin: auto;
+
+            display: flex;
+
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .nav-inner a {
+            padding: 18px 15px;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+        .nav-inner a:hover {
+            background: #111827;
+            color: white;
+        }
+
+
+        /* =====================================================
+           GENERAL SECTION
+        ===================================================== */
+
+        .section {
+            max-width: 1200px;
+
+            margin: auto;
+            padding: 100px 25px;
+        }
+
+        .section + .section {
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .section-number {
+            font-size: 14px;
+            color: #64748b;
+            letter-spacing: 3px;
+            font-weight: 700;
+
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 38px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            margin-bottom: 12px;
+        }
+
+        h4 {
+            margin-bottom: 8px;
+        }
+
+        .section-intro {
+            max-width: 850px;
+            color: #4b5563;
+            margin-bottom: 40px;
+        }
+
+
+        /* =====================================================
+           COMMON GRID
+        ===================================================== */
+
+        .info-grid,
+        .analysis-grid,
+        .quality-grid,
+        .factory-info-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(200px, 1fr));
+
+            gap: 15px;
+
+            margin-top: 35px;
+        }
+
+        .info-card,
+        .analysis-card,
+        .quality-card {
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            padding: 25px;
+
+            border-radius: 8px;
+        }
+
+        .info-card span,
+        .analysis-card span,
+        .quality-card span {
+
+            display: block;
+
+            font-size: 12px;
+            color: #64748b;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+
+            margin-bottom: 8px;
+        }
+
+        .info-card strong {
+            font-size: 18px;
+        }
+
+
+        /* =====================================================
+           PRODUCT
+        ===================================================== */
+
+        .two-column {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 40px;
+            align-items: start;
+        }
+
+        .product-photo,
+        .image-placeholder {
+
+            min-height: 350px;
+
+            background: #e5e7eb;
+
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 8px;
+
+            overflow: hidden;
+        }
+
+        .product-photo img {
+            width: 100%;
+            height: 100%;
+            min-height: 350px;
+            object-fit: cover;
+        }
+
+        .data-table {
+
+            width: 100%;
+
+            margin-top: 20px;
+
+            background: white;
+
+            border-collapse: collapse;
+        }
+
+        .data-table th,
+        .data-table td {
+
+            padding: 13px;
+
+            border-bottom: 1px solid #e5e7eb;
+
+            text-align: left;
+        }
+
+        .data-table th {
+            width: 40%;
+            color: #475569;
+        }
+
+
+        /* =====================================================
+           FACTORY VISIT
+        ===================================================== */
+
+        .factory-gallery {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-top: 30px;
+        }
+
+        figure {
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 8px;
+
+            overflow: hidden;
+        }
+
+        figure img {
+
+            height: 240px;
+
+            object-fit: cover;
+
+            background: #e5e7eb;
+        }
+
+        figcaption {
+
+            padding: 15px;
+
+            font-size: 14px;
+
+            color: #475569;
+        }
+
+        .factory-info-grid > div {
+
+            background: #111827;
+            color: white;
+
+            padding: 22px;
+
+            border-radius: 6px;
+        }
+
+        .factory-info-grid span {
+
+            display: block;
+
+            color: #94a3b8;
+
+            font-size: 11px;
+
+            margin-bottom: 5px;
+        }
+
+
+        /* =====================================================
+           PROCESS FLOW
+        ===================================================== */
+
+        .process-flow-wrapper {
+
+            margin: 45px 0 60px;
+
+            padding: 30px;
+
+            background: #111827;
+
+            border-radius: 10px;
+
+            overflow-x: auto;
+        }
+
+        .process-flow-title {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .process-flow {
+
+            min-width: 850px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+        }
+
+        .flow-box {
+
+            flex: 1;
+
+            min-width: 105px;
+
+            background: white;
+
+            padding: 16px 8px;
+
+            border-radius: 5px;
+
+            text-align: center;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+        .flow-box span {
+
+            display: block;
+
+            color: #64748b;
+
+            font-size: 10px;
+
+            margin-bottom: 4px;
+        }
+
+        .arrow {
+            color: white;
+            font-size: 20px;
+        }
+
+
+        /* =====================================================
+           PROCESS CARD
+        ===================================================== */
+
+        .process-card {
+
+            background: white;
+
+            border: 1px solid #dfe3e8;
+
+            border-radius: 10px;
+
+            padding: 30px;
+
+            margin-bottom: 30px;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .process-title {
+
+            border-bottom: 1px solid #e5e7eb;
+
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .process-title span {
+
+            font-size: 12px;
+            color: #64748b;
+
+            letter-spacing: 2px;
+        }
+
+        .process-title h3 {
+            font-size: 27px;
+            margin-top: 4px;
+        }
+
+        .process-detail {
+
+            display: grid;
+
+            grid-template-columns: 0.9fr 1.1fr;
+
+            gap: 25px;
+
+            margin-bottom: 25px;
+        }
+
+        .process-image {
+
+            background: #e5e7eb;
+
+            min-height: 240px;
+
+            border-radius: 6px;
+
+            overflow: hidden;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+        }
+
+        .process-image img {
+
+            width: 100%;
+            height: 100%;
+
+            min-height: 240px;
+
+            object-fit: cover;
+        }
+
+        .process-description {
+
+            display: flex;
+            flex-direction: column;
+
+            justify-content: center;
+        }
+
+        .process-description p {
+            color: #4b5563;
+        }
+
+        .process-data {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 10px;
+        }
+
+        .process-data > div {
+
+            background: #f1f5f9;
+
+            padding: 15px;
+
+            min-height: 95px;
+
+            border-radius: 5px;
+        }
+
+        .process-data span {
+
+            display: block;
+
+            color: #64748b;
+
+            font-size: 11px;
+
+            margin-bottom: 7px;
+        }
+
+        .process-data strong {
+
+            font-size: 14px;
+
+            word-break: keep-all;
+        }
+
+        .field-note {
+
+            margin-top: 18px;
+
+            padding: 15px 18px;
+
+            border-left: 4px solid #111827;
+
+            background: #f8fafc;
+        }
+
+        .field-note span {
+
+            display: block;
+
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: #475569;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+
+        /* =====================================================
+           ENGINEERING ANALYSIS
+        ===================================================== */
+
+        .analysis-card {
+
+            min-height: 230px;
+        }
+
+        .formula {
+
+            margin-top: 20px;
+
+            background: #111827;
+
+            color: white;
+
+            padding: 15px;
+
+            text-align: center;
+
+            font-family: "Times New Roman", serif;
+
+            font-size: 20px;
+
+            border-radius: 5px;
+        }
+
+        .analysis-card p {
+            color: #4b5563;
+        }
+
+
+        /* =====================================================
+           QUALITY
+        ===================================================== */
+
+        .quality-card {
+
+            min-height: 180px;
+        }
+
+        .quality-card ul {
+
+            margin-left: 20px;
+
+            color: #475569;
+        }
+
+
+        /* =====================================================
+           IMPROVEMENT
+        ===================================================== */
+
+        .problem-box {
+
+            padding: 25px;
+
+            margin-bottom: 35px;
+
+            background: #fff7ed;
+
+            border-left: 5px solid #9a3412;
+
+            border-radius: 5px;
+        }
+
+        .comparison {
+
+            display: grid;
+
+            grid-template-columns: 1fr auto 1fr;
+
+            gap: 20px;
+
+            align-items: center;
+        }
+
+        .comparison-card {
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 8px;
+
+            padding: 30px;
+
+            min-height: 280px;
+        }
+
+        .comparison-card span {
+
+            font-size: 11px;
+            letter-spacing: 2px;
+
+            color: #64748b;
+        }
+
+        .comparison-card h3 {
+
+            margin-top: 8px;
+            margin-bottom: 20px;
+        }
+
+        .comparison-card ul {
+
+            padding-left: 20px;
+        }
+
+        .comparison-arrow {
+
+            font-size: 35px;
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           PRODUCTIVITY TABLE
+        ===================================================== */
+
+        .comparison-table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            margin-top: 30px;
+
+            background: white;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+
+            padding: 15px;
+
+            border: 1px solid #dfe3e8;
+
+            text-align: center;
+        }
+
+        .comparison-table th {
+
+            background: #111827;
+            color: white;
+        }
+
+        .comparison-table td:first-child {
+
+            text-align: left;
+
+            font-weight: 600;
+        }
+
+
+        /* =====================================================
+           PROGRESS
+        ===================================================== */
+
+        .timeline {
+
+            margin-top: 40px;
+
+            border-left: 2px solid #cbd5e1;
+
+            padding-left: 35px;
+        }
+
+        .timeline-item {
+
+            position: relative;
+
+            margin-bottom: 35px;
+        }
+
+        .timeline-item::before {
+
+            content: "";
+
+            position: absolute;
+
+            left: -43px;
+            top: 8px;
+
+            width: 14px;
+            height: 14px;
+
+            border-radius: 50%;
+
+            background: #111827;
+        }
+
+        .timeline-date {
+
+            font-size: 12px;
+
+            color: #64748b;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 5px;
+        }
+
+        .timeline-content {
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 6px;
+
+            border: 1px solid #e5e7eb;
+        }
+
+        .timeline-content h3 {
+            margin-bottom: 5px;
+        }
+
+
+        /* =====================================================
+           TEAM
+        ===================================================== */
+
+        .team-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+
+            gap: 20px;
+
+            margin-top: 30px;
+        }
+
+        .team-card {
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            padding: 30px;
+
+            border-radius: 7px;
+        }
+
+        .team-card p {
+            color: #64748b;
+        }
+
+
+        /* =====================================================
+           REFERENCES
+        ===================================================== */
+
+        .reference-list {
+
+            padding-left: 25px;
+
+            background: white;
+
+            padding-top: 30px;
+            padding-bottom: 30px;
+            padding-right: 30px;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 7px;
+        }
+
+        .reference-list li {
+            margin-bottom: 12px;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+
+            background: #111827;
+
+            color: white;
+
+            padding: 40px;
+
+            text-align: center;
+        }
+
+        #topButton {
+
+            margin-top: 20px;
+
+            background: white;
+
+            border: none;
+
+            padding: 10px 20px;
+
+            cursor: pointer;
+
+            font-weight: 700;
+
+            border-radius: 4px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media(max-width: 900px) {
+
+            .two-column,
+            .process-detail,
+            .comparison {
+
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-arrow {
+
+                transform: rotate(90deg);
+
+                text-align: center;
+            }
+
+            .process-data {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .factory-gallery {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media(max-width: 550px) {
+
+            .section {
+
+                padding: 75px 18px;
+            }
+
+            h2 {
+                font-size: 30px;
+            }
+
+            .process-data {
+
+                grid-template-columns: 1fr;
+            }
+
+            .hero-description {
+
+                font-size: 18px;
+            }
+
+        }
+
+    </style>
 </head>
 
 
 <body>
 
-    <!-- =========================
-         상단 제목 영역
-    ========================== -->
 
-    <header class="hero">
+<!-- =====================================================
+     HERO
+===================================================== -->
 
-        <div class="hero-content">
+<header class="hero">
 
-            <p class="project-label">
-                2026 Manufacturing Analysis Project
-            </p>
+    <div class="hero-content">
 
-            <h1>
-                PRODUCT NAME
-            </h1>
-
-            <p class="hero-description">
-                Manufacturing Process Analysis
-            </p>
-
-            <p class="hero-small">
-                기계가공 및 공정설계 · 2026 Fall
-            </p>
-
-        </div>
-
-    </header>
-
-
-    <!-- =========================
-         메뉴
-    ========================== -->
-
-    <nav class="navbar">
-
-        <div class="nav-inner">
-
-            <a href="#overview">Overview</a>
-
-            <a href="#product">Product</a>
-
-            <a href="#process">Process</a>
-
-            <a href="#analysis">Analysis</a>
-
-            <a href="#improvement">Improvement</a>
-
-            <a href="#progress">Progress</a>
-
-            <a href="#team">Team</a>
-
-            <a href="#references">References</a>
-
-        </div>
-
-    </nav>
-
-
-    <main>
-
-
-        <!-- =========================
-             1. 프로젝트 개요
-        ========================== -->
-
-        <section id="overview" class="section">
-
-            <p class="section-number">
-                01
-            </p>
-
-            <h2>
-                Project Overview
-            </h2>
-
-            <p>
-                본 프로젝트에서는 실제 상용 제품의 제조 과정을 조사하고,
-                각 생산 공정의 특징과 공정 조건을 분석한다.
-            </p>
-
-            <p>
-                또한 공정별 장비, 공차, 표면조도, 가공 조건,
-                생산 시간 및 개선 가능성을 검토한다.
-            </p>
-
-
-            <div class="info-grid">
-
-                <div class="info-card">
-
-                    <span>Course</span>
-
-                    <strong>
-                        기계가공 및 공정설계
-                    </strong>
-
-                </div>
-
-
-                <div class="info-card">
-
-                    <span>Semester</span>
-
-                    <strong>
-                        2026 Fall
-                    </strong>
-
-                </div>
-
-
-                <div class="info-card">
-
-                    <span>Project Type</span>
-
-                    <strong>
-                        Manufacturing Analysis
-                    </strong>
-
-                </div>
-
-
-                <div class="info-card">
-
-                    <span>Selected Product</span>
-
-                    <strong>
-                        PRODUCT NAME
-                    </strong>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             2. 제품
-        ========================== -->
-
-        <section id="product" class="section">
-
-            <p class="section-number">
-                02
-            </p>
-
-            <h2>
-                Product Analysis
-            </h2>
-
-
-            <div class="two-column">
-
-                <div>
-
-                    <h3>
-                        Product Overview
-                    </h3>
-
-                    <p>
-                        여기에 제품의 기능과 제품 선정 이유를 작성합니다.
-                    </p>
-
-
-                    <table class="data-table">
-
-                        <tr>
-                            <th>Product</th>
-                            <td>PRODUCT NAME</td>
-                        </tr>
-
-                        <tr>
-                            <th>Manufacturer</th>
-                            <td>미정</td>
-                        </tr>
-
-                        <tr>
-                            <th>Material</th>
-                            <td>미정</td>
-                        </tr>
-
-                        <tr>
-                            <th>Dimensions</th>
-                            <td>미정</td>
-                        </tr>
-
-                        <tr>
-                            <th>Weight</th>
-                            <td>미정</td>
-                        </tr>
-
-                        <tr>
-                            <th>Main Function</th>
-                            <td>제품 기능 작성</td>
-                        </tr>
-
-                    </table>
-
-                </div>
-
-
-                <div class="image-placeholder">
-
-                    <p>
-                        Product Image
-                    </p>
-
-                    <small>
-                        제품 선정 후 사진 추가
-                    </small>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             3. 제조공정
-        ========================== -->
-
-        <section id="process" class="section">
-
-            <p class="section-number">
-                03
-            </p>
-
-            <h2>
-                Manufacturing Process
-            </h2>
-
-            <p>
-                실제 제조공정을 조사한 후 아래 공정명을 변경하면 됩니다.
-            </p>
-
-
-            <!-- 공정 흐름 -->
-
-            <div class="process-flow">
-
-                <div class="flow-box">
-                    Raw Material
-                </div>
-
-                <div class="arrow">
-                    ↓
-                </div>
-
-                <div class="flow-box">
-                    Process 1
-                </div>
-
-                <div class="arrow">
-                    ↓
-                </div>
-
-                <div class="flow-box">
-                    Process 2
-                </div>
-
-                <div class="arrow">
-                    ↓
-                </div>
-
-                <div class="flow-box">
-                    Process 3
-                </div>
-
-                <div class="arrow">
-                    ↓
-                </div>
-
-                <div class="flow-box">
-                    Process 4
-                </div>
-
-                <div class="arrow">
-                    ↓
-                </div>
-
-                <div class="flow-box">
-                    Inspection
-                </div>
-
-            </div>
-
-
-            <!-- 개별 공정 -->
-
-            <div class="process-card">
-
-                <div class="process-title">
-
-                    <span>
-                        PROCESS 01
-                    </span>
-
-                    <h3>
-                        Process Name
-                    </h3>
-
-                </div>
-
-
-                <p>
-                    해당 공정이 필요한 이유와 제조 과정에 대해 설명합니다.
-                </p>
-
-
-                <div class="process-data">
-
-                    <div>
-                        <span>Input Material</span>
-                        <strong>미정</strong>
-                    </div>
-
-                    <div>
-                        <span>Equipment</span>
-                        <strong>미정</strong>
-                    </div>
-
-                    <div>
-                        <span>Operating Parameter</span>
-                        <strong>미정</strong>
-                    </div>
-
-                    <div>
-                        <span>Tolerance</span>
-                        <strong>미정</strong>
-                    </div>
-
-                    <div>
-                        <span>Surface Finish</span>
-                        <strong>미정</strong>
-                    </div>
-
-                    <div>
-                        <span>Processing Time</span>
-                        <strong>미정</strong>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="process-card">
-
-                <div class="process-title">
-
-                    <span>
-                        PROCESS 02
-                    </span>
-
-                    <h3>
-                        Process Name
-                    </h3>
-
-                </div>
-
-
-                <p>
-                    두 번째 생산공정을 설명합니다.
-                </p>
-
-
-                <div class="process-data">
-
-                    <div>
-                        <span>Equipment</span>
-                        <strong>미정</strong>
-                    </div>
-
-                    <div>
-                        <span>Tool / Die</span>
-                        <strong>미정</strong>
-                    </div>
-
-                    <div>
-                        <span>Speed</span>
-                        <strong>미정</strong>
-                    </div>
-
-                    <div>
-                        <span>Feed</span>
-                        <strong>미정</strong>
-                    </div>
-
-                    <div>
-                        <span>Power</span>
-                        <strong>미정</strong>
-                    </div>
-
-                    <div>
-                        <span>Labor</span>
-                        <strong>미정</strong>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="process-card">
-
-                <div class="process-title">
-
-                    <span>
-                        PROCESS 03
-                    </span>
-
-                    <h3>
-                        Process Name
-                    </h3>
-
-                </div>
-
-                <p>
-                    세 번째 생산공정을 설명합니다.
-                </p>
-
-            </div>
-
-
-            <div class="process-card">
-
-                <div class="process-title">
-
-                    <span>
-                        PROCESS 04
-                    </span>
-
-                    <h3>
-                        Process Name
-                    </h3>
-
-                </div>
-
-                <p>
-                    네 번째 생산공정을 설명합니다.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             4. 공학적 분석
-        ========================== -->
-
-        <section id="analysis" class="section">
-
-            <p class="section-number">
-                04
-            </p>
-
-            <h2>
-                Engineering Analysis
-            </h2>
-
-            <p>
-                공정과 관련된 계산 및 공학적인 판단을 작성합니다.
-            </p>
-
-
-            <div class="analysis-grid">
-
-                <div class="analysis-card">
-
-                    <span>
-                        Analysis 01
-                    </span>
-
-                    <h3>
-                        Force Analysis
-                    </h3>
-
-                    <p>
-                        절삭력, 성형력 또는 필요한 힘을 계산합니다.
-                    </p>
-
-                    <div class="formula">
-                        F = ...
-                    </div>
-
-                </div>
-
-
-                <div class="analysis-card">
-
-                    <span>
-                        Analysis 02
-                    </span>
-
-                    <h3>
-                        Power Requirement
-                    </h3>
-
-                    <p>
-                        장비에 필요한 동력을 계산합니다.
-                    </p>
-
-                    <div class="formula">
-                        P = F × V
-                    </div>
-
-                </div>
-
-
-                <div class="analysis-card">
-
-                    <span>
-                        Analysis 03
-                    </span>
-
-                    <h3>
-                        Processing Time
-                    </h3>
-
-                    <p>
-                        공정 시간을 계산하거나 추정합니다.
-                    </p>
-
-                    <div class="formula">
-                        t = ...
-                    </div>
-
-                </div>
-
-
-                <div class="analysis-card">
-
-                    <span>
-                        Analysis 04
-                    </span>
-
-                    <h3>
-                        Process Capability
-                    </h3>
-
-                    <p>
-                        공차와 표면조도를 분석합니다.
-                    </p>
-
-                    <div class="formula">
-                        Tolerance = ...
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             5. 개선안
-        ========================== -->
-
-        <section id="improvement" class="section">
-
-            <p class="section-number">
-                05
-            </p>
-
-            <h2>
-                Process Improvement
-            </h2>
-
-            <p>
-                기존 생산공정에서 발생할 수 있는 문제와 개선안을 제시합니다.
-            </p>
-
-
-            <div class="comparison">
-
-                <div class="comparison-card">
-
-                    <span>
-                        Current Process
-                    </span>
-
-                    <h3>
-                        Existing Manufacturing Method
-                    </h3>
-
-                    <ul>
-                        <li>문제점 1</li>
-                        <li>문제점 2</li>
-                        <li>문제점 3</li>
-                    </ul>
-
-                </div>
-
-
-                <div class="comparison-arrow">
-                    →
-                </div>
-
-
-                <div class="comparison-card">
-
-                    <span>
-                        Proposed Process
-                    </span>
-
-                    <h3>
-                        Improved Manufacturing Method
-                    </h3>
-
-                    <ul>
-                        <li>개선안 1</li>
-                        <li>개선안 2</li>
-                        <li>개선안 3</li>
-                    </ul>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             6. 진행상황
-        ========================== -->
-
-        <section id="progress" class="section">
-
-            <p class="section-number">
-                06
-            </p>
-
-            <h2>
-                Project Progress
-            </h2>
-
-            <p>
-                프로젝트가 진행될 때마다 여기에 기록을 추가합니다.
-            </p>
-
-
-            <div class="timeline">
-
-
-                <div class="timeline-item">
-
-                    <div class="timeline-date">
-                        SEP 08
-                    </div>
-
-                    <div class="timeline-content">
-
-                        <h3>
-                            Project Started
-                        </h3>
-
-                        <p>
-                            과제 요구사항 검토 및 웹페이지 제작 시작.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="timeline-item">
-
-                    <div class="timeline-date">
-                        SEP 14
-                    </div>
-
-                    <div class="timeline-content">
-
-                        <h3>
-                            Project Proposal
-                        </h3>
-
-                        <p>
-                            제품 선정 및 초기 제조공정 조사.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="timeline-item">
-
-                    <div class="timeline-date">
-                        OCT 26
-                    </div>
-
-                    <div class="timeline-content">
-
-                        <h3>
-                            Progress Report
-                        </h3>
-
-                        <p>
-                            주요 공정 및 공정 조건 분석.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="timeline-item">
-
-                    <div class="timeline-date">
-                        DEC 07
-                    </div>
-
-                    <div class="timeline-content">
-
-                        <h3>
-                            Project Presentation
-                        </h3>
-
-                        <p>
-                            최종 분석 결과 발표.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="timeline-item">
-
-                    <div class="timeline-date">
-                        DEC 14
-                    </div>
-
-                    <div class="timeline-content">
-
-                        <h3>
-                            Final Report
-                        </h3>
-
-                        <p>
-                            프로젝트 최종 보고서 제출.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             7. 팀
-        ========================== -->
-
-        <section id="team" class="section">
-
-            <p class="section-number">
-                07
-            </p>
-
-            <h2>
-                Team
-            </h2>
-
-
-            <div class="team-grid">
-
-                <div class="team-card">
-
-                    <h3>
-                        유승환
-                    </h3>
-
-                    <p>
-                        역할 작성
-                    </p>
-
-                </div>
-
-
-                <div class="team-card">
-
-                    <h3>
-                        최준석
-                    </h3>
-
-                    <p>
-                        역할 작성
-                    </p>
-
-                </div>
-
-
-                <div class="team-card">
-
-                    <h3>
-                        전상현
-                    </h3>
-
-                    <p>
-                        역할 작성
-                    </p>
-
-                </div>
-
-
-                <div class="team-card">
-
-                    <h3>
-                        Member 4
-                    </h3>
-
-                    <p>
-                        역할 작성
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             8. 참고문헌
-        ========================== -->
-
-        <section id="references" class="section">
-
-            <p class="section-number">
-                08
-            </p>
-
-            <h2>
-                References
-            </h2>
-
-
-            <ol class="reference-list">
-
-                <li>
-                    Manufacturing Engineering and Technology.
-                </li>
-
-                <li>
-                    제품 제조사 기술자료.
-                </li>
-
-                <li>
-                    관련 논문 및 기술자료.
-                </li>
-
-                <li>
-                    제조공정 관련 웹 자료.
-                </li>
-
-            </ol>
-
-        </section>
-
-
-    </main>
-
-
-    <!-- =========================
-         Footer
-    ========================== -->
-
-    <footer>
-
-        <p>
-            Manufacturing Analysis Project · 2026
+        <p class="project-label">
+            2026 MANUFACTURING ANALYSIS PROJECT
         </p>
 
-        <button id="topButton">
-            ↑ Top
-        </button>
+        <h1>
+            SPRING
+        </h1>
 
-    </footer>
+        <p class="hero-description">
+            Manufacturing Process Analysis
+        </p>
+
+        <p class="hero-small">
+            기계가공 및 공정설계 · 2026 Fall
+        </p>
+
+    </div>
+
+</header>
 
 
-    <script src="script.js"></script>
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="nav-inner">
+
+        <a href="#overview">Overview</a>
+        <a href="#product">Product</a>
+        <a href="#factory">Factory Visit</a>
+        <a href="#process">Process</a>
+        <a href="#analysis">Analysis</a>
+        <a href="#quality">Quality</a>
+        <a href="#improvement">Improvement</a>
+        <a href="#productivity">Productivity</a>
+        <a href="#progress">Progress</a>
+        <a href="#team">Team</a>
+        <a href="#references">References</a>
+
+    </div>
+
+</nav>
+
+
+
+<main>
+
+
+<!-- =====================================================
+     01 PROJECT OVERVIEW
+===================================================== -->
+
+<section id="overview" class="section">
+
+    <p class="section-number">
+        01
+    </p>
+
+    <h2>
+        Project Overview
+    </h2>
+
+    <p class="section-intro">
+
+        본 프로젝트에서는 실제 스프링 제조업체의 생산 현장을 방문하여
+        스프링의 원재료 투입부터 최종 검사까지의 제조공정을 조사하고,
+        각 공정에 사용되는 설비와 공정조건을 분석한다.
+
+        또한 공정별 가공조건, 생산시간, 작업방식, 공차 및 품질관리 요소를
+        조사하고 실제 생산현장에서 확인한 문제점을 바탕으로
+        제조공정의 개선 가능성을 검토한다.
+
+    </p>
+
+
+    <div class="info-grid">
+
+        <div class="info-card">
+
+            <span>Course</span>
+
+            <strong>
+                기계가공 및 공정설계
+            </strong>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <span>Semester</span>
+
+            <strong>
+                2026 Fall
+            </strong>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <span>Project Option</span>
+
+            <strong>
+                Option A
+            </strong>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <span>Selected Product</span>
+
+            <strong>
+                Compression Coil Spring
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     02 PRODUCT ANALYSIS
+===================================================== -->
+
+<section id="product" class="section">
+
+    <p class="section-number">
+        02
+    </p>
+
+    <h2>
+        Product Analysis
+    </h2>
+
+
+    <div class="two-column">
+
+
+        <div>
+
+            <h3>
+                Product Overview
+            </h3>
+
+            <p>
+
+                분석 대상은 실제 공장에서 생산되는 코일 스프링이다.
+
+                스프링은 탄성변형을 이용하여 하중을 저장하거나
+                충격 및 진동을 흡수하는 기계요소이며,
+                자동차, 산업기계, 전자제품 등 다양한 분야에서 사용된다.
+
+            </p>
+
+
+            <table class="data-table">
+
+                <tr>
+
+                    <th>
+                        Product
+                    </th>
+
+                    <td>
+                        Compression Coil Spring
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <th>
+                        Manufacturer
+                    </th>
+
+                    <td>
+                        공장명 입력
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <th>
+                        Material
+                    </th>
+
+                    <td>
+                        실제 소재 입력
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <th>
+                        Wire Diameter (d)
+                    </th>
+
+                    <td>
+                        측정값 입력 mm
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <th>
+                        Mean Coil Diameter (D)
+                    </th>
+
+                    <td>
+                        측정값 입력 mm
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <th>
+                        Free Length
+                    </th>
+
+                    <td>
+                        측정값 입력 mm
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <th>
+                        Number of Coils
+                    </th>
+
+                    <td>
+                        측정값 입력
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <th>
+                        Main Function
+                    </th>
+
+                    <td>
+                        Elastic Energy Storage / Shock Absorption
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+
+
+        <div class="product-photo">
+
+            <img
+                src="images/product.jpg"
+                alt="Spring Product"
+                onerror="
+                    this.style.display='none';
+                    this.parentElement.innerHTML=
+                    '<strong>Product Image</strong><br>images/product.jpg';
+                "
+            >
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     03 FACTORY VISIT
+===================================================== -->
+
+<section id="factory" class="section">
+
+    <p class="section-number">
+        03
+    </p>
+
+    <h2>
+        Factory Visit & Field Investigation
+    </h2>
+
+
+    <p class="section-intro">
+
+        제조공정에 대한 실제 데이터를 확보하기 위해
+        스프링 제조업체를 직접 방문하였다.
+
+        현장에서 생산설비와 제품의 이동경로를 확인하고,
+        작업자 인터뷰와 직접 관찰을 통해 제조공정,
+        장비, 작업방법 및 공정상의 문제점을 조사하였다.
+
+    </p>
+
+
+
+    <div class="factory-gallery">
+
+
+        <figure>
+
+            <img
+                src="images/factory01.jpg"
+                alt="Factory"
+                onerror="this.style.visibility='hidden'"
+            >
+
+            <figcaption>
+                Factory Overview
+            </figcaption>
+
+        </figure>
+
+
+
+        <figure>
+
+            <img
+                src="images/factory02.jpg"
+                alt="Production"
+                onerror="this.style.visibility='hidden'"
+            >
+
+            <figcaption>
+                Production Equipment
+            </figcaption>
+
+        </figure>
+
+
+
+        <figure>
+
+            <img
+                src="images/factory03.jpg"
+                alt="Grinding"
+                onerror="this.style.visibility='hidden'"
+            >
+
+            <figcaption>
+                Spring Manufacturing Process
+            </figcaption>
+
+        </figure>
+
+
+    </div>
+
+
+
+    <div class="factory-info-grid">
+
+
+        <div>
+
+            <span>
+                Investigation Method
+            </span>
+
+            <strong>
+                Factory Observation
+            </strong>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                Data Collection
+            </span>
+
+            <strong>
+                Observation / Interview
+            </strong>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                Analysis Target
+            </span>
+
+            <strong>
+                8 Manufacturing Processes
+            </strong>
+
+        </div>
+
+
+        <div>
+
+            <span>
+                Main Improvement Target
+            </span>
+
+            <strong>
+                Grinding Process
+            </strong>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     04 MANUFACTURING PROCESS
+===================================================== -->
+
+<section id="process" class="section">
+
+    <p class="section-number">
+        04
+    </p>
+
+    <h2>
+        Manufacturing Process
+    </h2>
+
+
+    <p class="section-intro">
+
+        실제 공장에서 확인한 생산공정을 기준으로
+        총 8개의 주요 제조공정을 분석한다.
+
+        아래의 공정명은 실제 공장의 공정에 맞게 수정한다.
+
+    </p>
+
+
+
+    <!-- PROCESS FLOW -->
+
+    <div class="process-flow-wrapper">
+
+        <h3 class="process-flow-title">
+            Overall Manufacturing Flow
+        </h3>
+
+
+        <div class="process-flow">
+
+            <div class="flow-box">
+                <span>INPUT</span>
+                Raw Material
+            </div>
+
+            <div class="arrow">
+                →
+            </div>
+
+
+            <div class="flow-box">
+                <span>01</span>
+                Wire Preparation
+            </div>
+
+            <div class="arrow">
+                →
+            </div>
+
+
+            <div class="flow-box">
+                <span>02</span>
+                Coiling
+            </div>
+
+            <div class="arrow">
+                →
+            </div>
+
+
+            <div class="flow-box">
+                <span>03</span>
+                Heat Treatment
+            </div>
+
+            <div class="arrow">
+                →
+            </div>
+
+
+            <div class="flow-box">
+                <span>04</span>
+                End Grinding
+            </div>
+
+            <div class="arrow">
+                →
+            </div>
+
+
+            <div class="flow-box">
+                <span>05</span>
+                Process 05
+            </div>
+
+            <div class="arrow">
+                →
+            </div>
+
+
+            <div class="flow-box">
+                <span>06</span>
+                Process 06
+            </div>
+
+            <div class="arrow">
+                →
+            </div>
+
+
+            <div class="flow-box">
+                <span>07</span>
+                Process 07
+            </div>
+
+            <div class="arrow">
+                →
+            </div>
+
+
+            <div class="flow-box">
+                <span>08</span>
+                Inspection
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PROCESS 01
+    ===================================================== -->
+
+    <div class="process-card">
+
+
+        <div class="process-title">
+
+            <span>
+                PROCESS 01
+            </span>
+
+            <h3>
+                Wire Preparation
+            </h3>
+
+        </div>
+
+
+
+        <div class="process-detail">
+
+
+            <div class="process-image">
+
+                <img
+                    src="images/process01.jpg"
+                    alt="Process 01"
+                    onerror="this.style.visibility='hidden'"
+                >
+
+            </div>
+
+
+
+            <div class="process-description">
+
+                <h4>
+                    Process Description
+                </h4>
+
+                <p>
+
+                    스프링 제조에 사용되는 선재를 준비하고
+                    생산설비에 공급하기 위한 단계이다.
+
+                    실제 사용 소재의 종류, 선재 직경,
+                    공급방식 등을 조사하여 작성한다.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="process-data">
+
+
+            <div>
+                <span>Input Material</span>
+                <strong>Spring Wire</strong>
+            </div>
+
+
+            <div>
+                <span>Equipment</span>
+                <strong>Wire Feeding Equipment</strong>
+            </div>
+
+
+            <div>
+                <span>Operating Parameter</span>
+                <strong>Wire Diameter / Feed</strong>
+            </div>
+
+
+            <div>
+                <span>Power</span>
+                <strong>Data Required</strong>
+            </div>
+
+
+            <div>
+                <span>Processing Time</span>
+                <strong>Data Required</strong>
+            </div>
+
+
+            <div>
+                <span>Labor</span>
+                <strong>Factory Data</strong>
+            </div>
+
+
+            <div>
+                <span>Tolerance</span>
+                <strong>Material Specification</strong>
+            </div>
+
+
+            <div>
+                <span>Output</span>
+                <strong>Prepared Wire</strong>
+            </div>
+
+
+        </div>
+
+
+        <div class="field-note">
+
+            <span>
+                FIELD OBSERVATION
+            </span>
+
+            <p>
+                실제 현장에서 확인한 원재료 보관 및 공급 방법을 작성.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PROCESS 02
+    ===================================================== -->
+
+    <div class="process-card">
+
+
+        <div class="process-title">
+
+            <span>
+                PROCESS 02
+            </span>
+
+            <h3>
+                Coiling
+            </h3>
+
+        </div>
+
+
+
+        <div class="process-detail">
+
+
+            <div class="process-image">
+
+                <img
+                    src="images/process02.jpg"
+                    alt="Coiling"
+                    onerror="this.style.visibility='hidden'"
+                >
+
+            </div>
+
+
+
+            <div class="process-description">
+
+                <h4>
+                    Process Description
+                </h4>
+
+                <p>
+
+                    스프링 선재를 코일링 머신에 공급하여
+                    일정한 직경과 피치를 갖는 나선 형태로 성형한다.
+
+                    Wire feed와 tooling 조건에 따라
+                    스프링 직경, 피치 및 전체 길이가 결정된다.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="process-data">
+
+
+            <div>
+                <span>Input Material</span>
+                <strong>Spring Wire</strong>
+            </div>
+
+
+            <div>
+                <span>Equipment</span>
+                <strong>Coiling Machine</strong>
+            </div>
+
+
+            <div>
+                <span>Operating Parameter</span>
+                <strong>Feed / Speed / Pitch</strong>
+            </div>
+
+
+            <div>
+                <span>Power</span>
+                <strong>Machine Data</strong>
+            </div>
+
+
+            <div>
+                <span>Processing Time</span>
+                <strong>Cycle Time 입력</strong>
+            </div>
+
+
+            <div>
+                <span>Labor</span>
+                <strong>Automatic / Operator</strong>
+            </div>
+
+
+            <div>
+                <span>Tolerance</span>
+                <strong>Diameter / Length</strong>
+            </div>
+
+
+            <div>
+                <span>Output</span>
+                <strong>Coiled Spring</strong>
+            </div>
+
+
+        </div>
+
+
+        <div class="field-note">
+
+            <span>
+                FIELD OBSERVATION
+            </span>
+
+            <p>
+                코일링 머신 종류, 작업자 역할 및 생산속도를 작성.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PROCESS 03
+    ===================================================== -->
+
+    <div class="process-card">
+
+
+        <div class="process-title">
+
+            <span>
+                PROCESS 03
+            </span>
+
+            <h3>
+                Heat Treatment
+            </h3>
+
+        </div>
+
+
+
+        <div class="process-detail">
+
+
+            <div class="process-image">
+
+                <img
+                    src="images/process03.jpg"
+                    alt="Heat Treatment"
+                    onerror="this.style.visibility='hidden'"
+                >
+
+            </div>
+
+
+
+            <div class="process-description">
+
+                <h4>
+                    Process Description
+                </h4>
+
+                <p>
+
+                    성형 과정에서 발생한 잔류응력을 제거하고
+                    스프링의 기계적 특성을 안정화하기 위해
+                    열처리를 수행한다.
+
+                    실제 공장의 처리온도와 시간을 조사하여 작성한다.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="process-data">
+
+
+            <div>
+                <span>Input</span>
+                <strong>Coiled Spring</strong>
+            </div>
+
+
+            <div>
+                <span>Equipment</span>
+                <strong>Heat Treatment Furnace</strong>
+            </div>
+
+
+            <div>
+                <span>Temperature</span>
+                <strong>실제 온도 입력 °C</strong>
+            </div>
+
+
+            <div>
+                <span>Power</span>
+                <strong>Furnace Data</strong>
+            </div>
+
+
+            <div>
+                <span>Processing Time</span>
+                <strong>실제 시간 입력</strong>
+            </div>
+
+
+            <div>
+                <span>Labor</span>
+                <strong>Factory Data</strong>
+            </div>
+
+
+            <div>
+                <span>Quality Factor</span>
+                <strong>Residual Stress</strong>
+            </div>
+
+
+            <div>
+                <span>Output</span>
+                <strong>Stress-Relieved Spring</strong>
+            </div>
+
+
+        </div>
+
+
+        <div class="field-note">
+
+            <span>
+                FIELD OBSERVATION
+            </span>
+
+            <p>
+                열처리 설비의 형태, 투입방법 및 공정조건을 작성.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PROCESS 04
+    ===================================================== -->
+
+    <div class="process-card">
+
+
+        <div class="process-title">
+
+            <span>
+                PROCESS 04
+            </span>
+
+            <h3>
+                End Grinding
+            </h3>
+
+        </div>
+
+
+
+        <div class="process-detail">
+
+
+            <div class="process-image">
+
+                <img
+                    src="images/process04.jpg"
+                    alt="Spring Grinding"
+                    onerror="this.style.visibility='hidden'"
+                >
+
+            </div>
+
+
+
+            <div class="process-description">
+
+                <h4>
+                    Process Description
+                </h4>
+
+                <p>
+
+                    압축 스프링이 하중을 안정적으로 전달할 수 있도록
+                    스프링 양 끝단을 연삭하여 평탄한 지지면을 형성한다.
+
+                    해당 과정에서는 연삭휠과 스프링 사이의 마찰로 인해
+                    열과 연삭분진이 발생한다.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="process-data">
+
+
+            <div>
+                <span>Input</span>
+                <strong>Heat Treated Spring</strong>
+            </div>
+
+
+            <div>
+                <span>Equipment</span>
+                <strong>Spring End Grinder</strong>
+            </div>
+
+
+            <div>
+                <span>Operating Parameter</span>
+                <strong>Wheel RPM / Feed</strong>
+            </div>
+
+
+            <div>
+                <span>Power</span>
+                <strong>Motor kW 입력</strong>
+            </div>
+
+
+            <div>
+                <span>Processing Time</span>
+                <strong>Cycle Time 입력</strong>
+            </div>
+
+
+            <div>
+                <span>Labor</span>
+                <strong>Manual / Semi-Automatic</strong>
+            </div>
+
+
+            <div>
+                <span>Quality</span>
+                <strong>Flatness / Squareness</strong>
+            </div>
+
+
+            <div>
+                <span>Output</span>
+                <strong>Ground Spring</strong>
+            </div>
+
+
+        </div>
+
+
+        <div class="field-note">
+
+            <span>
+                FIELD OBSERVATION
+            </span>
+
+            <p>
+
+                현장 관찰 결과 연삭공정에서 많은 분진이 발생하며,
+                작업자의 직접적인 작업 개입이 필요한 부분이 존재하였다.
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PROCESS 05
+    ===================================================== -->
+
+    <div class="process-card">
+
+
+        <div class="process-title">
+
+            <span>
+                PROCESS 05
+            </span>
+
+            <h3>
+                Process 05
+            </h3>
+
+        </div>
+
+
+        <div class="process-detail">
+
+
+            <div class="process-image">
+
+                <img
+                    src="images/process05.jpg"
+                    alt="Process 05"
+                    onerror="this.style.visibility='hidden'"
+                >
+
+            </div>
+
+
+            <div class="process-description">
+
+                <h4>
+                    Process Description
+                </h4>
+
+                <p>
+                    실제 공장에서 확인한 5번째 제조공정의
+                    목적과 원리를 작성합니다.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="process-data">
+
+            <div>
+                <span>Input</span>
+                <strong>입력 제품</strong>
+            </div>
+
+            <div>
+                <span>Equipment</span>
+                <strong>설비명</strong>
+            </div>
+
+            <div>
+                <span>Parameter</span>
+                <strong>공정조건</strong>
+            </div>
+
+            <div>
+                <span>Power</span>
+                <strong>설비 출력</strong>
+            </div>
+
+            <div>
+                <span>Processing Time</span>
+                <strong>공정시간</strong>
+            </div>
+
+            <div>
+                <span>Labor</span>
+                <strong>작업방식</strong>
+            </div>
+
+            <div>
+                <span>Tolerance</span>
+                <strong>공차</strong>
+            </div>
+
+            <div>
+                <span>Output</span>
+                <strong>출력 제품</strong>
+            </div>
+
+        </div>
+
+
+        <div class="field-note">
+
+            <span>
+                FIELD OBSERVATION
+            </span>
+
+            <p>
+                공장에서 관찰한 내용을 작성.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PROCESS 06
+    ===================================================== -->
+
+    <div class="process-card">
+
+
+        <div class="process-title">
+
+            <span>
+                PROCESS 06
+            </span>
+
+            <h3>
+                Process 06
+            </h3>
+
+        </div>
+
+
+        <div class="process-detail">
+
+
+            <div class="process-image">
+
+                <img
+                    src="images/process06.jpg"
+                    alt="Process 06"
+                    onerror="this.style.visibility='hidden'"
+                >
+
+            </div>
+
+
+            <div class="process-description">
+
+                <h4>
+                    Process Description
+                </h4>
+
+                <p>
+                    실제 공장에서 확인한 6번째 제조공정에 대해 작성합니다.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="process-data">
+
+            <div>
+                <span>Input</span>
+                <strong>입력 제품</strong>
+            </div>
+
+            <div>
+                <span>Equipment</span>
+                <strong>설비명</strong>
+            </div>
+
+            <div>
+                <span>Parameter</span>
+                <strong>공정조건</strong>
+            </div>
+
+            <div>
+                <span>Power</span>
+                <strong>설비 출력</strong>
+            </div>
+
+            <div>
+                <span>Processing Time</span>
+                <strong>공정시간</strong>
+            </div>
+
+            <div>
+                <span>Labor</span>
+                <strong>작업방식</strong>
+            </div>
+
+            <div>
+                <span>Tolerance</span>
+                <strong>공차</strong>
+            </div>
+
+            <div>
+                <span>Output</span>
+                <strong>출력 제품</strong>
+            </div>
+
+        </div>
+
+
+        <div class="field-note">
+
+            <span>
+                FIELD OBSERVATION
+            </span>
+
+            <p>
+                실제 관찰 내용을 작성.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PROCESS 07
+    ===================================================== -->
+
+    <div class="process-card">
+
+
+        <div class="process-title">
+
+            <span>
+                PROCESS 07
+            </span>
+
+            <h3>
+                Process 07
+            </h3>
+
+        </div>
+
+
+        <div class="process-detail">
+
+
+            <div class="process-image">
+
+                <img
+                    src="images/process07.jpg"
+                    alt="Process 07"
+                    onerror="this.style.visibility='hidden'"
+                >
+
+            </div>
+
+
+            <div class="process-description">
+
+                <h4>
+                    Process Description
+                </h4>
+
+                <p>
+                    실제 공장에서 확인한 7번째 제조공정에 대해 작성합니다.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="process-data">
+
+            <div>
+                <span>Input</span>
+                <strong>입력 제품</strong>
+            </div>
+
+            <div>
+                <span>Equipment</span>
+                <strong>설비명</strong>
+            </div>
+
+            <div>
+                <span>Parameter</span>
+                <strong>공정조건</strong>
+            </div>
+
+            <div>
+                <span>Power</span>
+                <strong>설비 출력</strong>
+            </div>
+
+            <div>
+                <span>Processing Time</span>
+                <strong>공정시간</strong>
+            </div>
+
+            <div>
+                <span>Labor</span>
+                <strong>작업방식</strong>
+            </div>
+
+            <div>
+                <span>Tolerance</span>
+                <strong>공차</strong>
+            </div>
+
+            <div>
+                <span>Output</span>
+                <strong>출력 제품</strong>
+            </div>
+
+        </div>
+
+
+        <div class="field-note">
+
+            <span>
+                FIELD OBSERVATION
+            </span>
+
+            <p>
+                실제 관찰 내용을 작성.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PROCESS 08
+    ===================================================== -->
+
+    <div class="process-card">
+
+
+        <div class="process-title">
+
+            <span>
+                PROCESS 08
+            </span>
+
+            <h3>
+                Final Inspection
+            </h3>
+
+        </div>
+
+
+        <div class="process-detail">
+
+
+            <div class="process-image">
+
+                <img
+                    src="images/process08.jpg"
+                    alt="Inspection"
+                    onerror="this.style.visibility='hidden'"
+                >
+
+            </div>
+
+
+            <div class="process-description">
+
+                <h4>
+                    Process Description
+                </h4>
+
+                <p>
+
+                    완성된 제품의 치수와 성능을 검사하여
+                    설계 및 품질 기준을 만족하는지 확인한다.
+
+                    검사 결과에 따라 정상제품과 불량제품을 분류한다.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="process-data">
+
+            <div>
+                <span>Input</span>
+                <strong>Finished Spring</strong>
+            </div>
+
+            <div>
+                <span>Equipment</span>
+                <strong>Inspection Equipment</strong>
+            </div>
+
+            <div>
+                <span>Parameter</span>
+                <strong>Dimensions / Load</strong>
+            </div>
+
+            <div>
+                <span>Power</span>
+                <strong>Equipment Data</strong>
+            </div>
+
+            <div>
+                <span>Inspection Time</span>
+                <strong>측정값 입력</strong>
+            </div>
+
+            <div>
+                <span>Labor</span>
+                <strong>Manual / Automatic</strong>
+            </div>
+
+            <div>
+                <span>Tolerance</span>
+                <strong>Drawing Specification</strong>
+            </div>
+
+            <div>
+                <span>Output</span>
+                <strong>Final Product</strong>
+            </div>
+
+        </div>
+
+
+        <div class="field-note">
+
+            <span>
+                FIELD OBSERVATION
+            </span>
+
+            <p>
+                현장에서 사용되는 검사장비와 합격판정 기준을 작성.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     05 ENGINEERING ANALYSIS
+===================================================== -->
+
+<section id="analysis" class="section">
+
+    <p class="section-number">
+        05
+    </p>
+
+    <h2>
+        Engineering Analysis
+    </h2>
+
+
+    <p class="section-intro">
+
+        실제 제품의 치수와 공정 데이터를 이용하여
+        스프링 특성과 제조공정을 공학적으로 분석한다.
+
+    </p>
+
+
+
+    <div class="analysis-grid">
+
+
+        <div class="analysis-card">
+
+            <span>
+                Analysis 01
+            </span>
+
+            <h3>
+                Spring Index
+            </h3>
+
+            <p>
+                평균 코일 직경과 선경을 이용하여
+                Spring Index를 계산한다.
+            </p>
+
+            <div class="formula">
+                C = D / d
+            </div>
+
+        </div>
+
+
+
+        <div class="analysis-card">
+
+            <span>
+                Analysis 02
+            </span>
+
+            <h3>
+                Spring Constant
+            </h3>
+
+            <p>
+                제품 치수를 이용하여
+                이론적인 스프링 상수를 계산한다.
+            </p>
+
+            <div class="formula">
+                k = Gd⁴ / (8D³Nₐ)
+            </div>
+
+        </div>
+
+
+
+        <div class="analysis-card">
+
+            <span>
+                Analysis 03
+            </span>
+
+            <h3>
+                Production Rate
+            </h3>
+
+            <p>
+                공정 Cycle Time을 기반으로
+                시간당 생산량을 계산한다.
+            </p>
+
+            <div class="formula">
+                Q = 3600 / t
+            </div>
+
+        </div>
+
+
+
+        <div class="analysis-card">
+
+            <span>
+                Analysis 04
+            </span>
+
+            <h3>
+                Power Requirement
+            </h3>
+
+            <p>
+                필요한 경우 가공력과 속도를 이용하여
+                요구동력을 분석한다.
+            </p>
+
+            <div class="formula">
+                P = F × V
+            </div>
+
+        </div>
+
+
+
+        <div class="analysis-card">
+
+            <span>
+                Analysis 05
+            </span>
+
+            <h3>
+                Grinding Process
+            </h3>
+
+            <p>
+                Grinding wheel 속도와
+                가공조건을 분석한다.
+            </p>
+
+            <div class="formula">
+                V = πDN / 60
+            </div>
+
+        </div>
+
+
+
+        <div class="analysis-card">
+
+            <span>
+                Analysis 06
+            </span>
+
+            <h3>
+                Process Capability
+            </h3>
+
+            <p>
+                제품 치수와 허용공차를 비교하여
+                제조공정의 품질 수준을 분석한다.
+            </p>
+
+            <div class="formula">
+                Cp = (USL - LSL) / 6σ
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     06 QUALITY CONTROL
+===================================================== -->
+
+<section id="quality" class="section">
+
+    <p class="section-number">
+        06
+    </p>
+
+    <h2>
+        Quality Control
+    </h2>
+
+
+    <p class="section-intro">
+
+        스프링의 최종 성능은 치수뿐 아니라
+        하중 특성, 끝단 형상 및 표면상태 등에 의해 영향을 받는다.
+
+        실제 공장의 검사방법과 제품 품질 기준을 조사한다.
+
+    </p>
+
+
+
+    <div class="quality-grid">
+
+
+        <div class="quality-card">
+
+            <span>
+                Inspection 01
+            </span>
+
+            <h3>
+                Dimensional Inspection
+            </h3>
+
+            <ul>
+
+                <li>
+                    Wire Diameter
+                </li>
+
+                <li>
+                    Coil Diameter
+                </li>
+
+                <li>
+                    Free Length
+                </li>
+
+                <li>
+                    Number of Coils
+                </li>
+
+            </ul>
+
+        </div>
+
+
+
+        <div class="quality-card">
+
+            <span>
+                Inspection 02
+            </span>
+
+            <h3>
+                Load Test
+            </h3>
+
+            <ul>
+
+                <li>
+                    Spring Rate
+                </li>
+
+                <li>
+                    Load at Specified Height
+                </li>
+
+                <li>
+                    Permanent Deformation
+                </li>
+
+            </ul>
+
+        </div>
+
+
+
+        <div class="quality-card">
+
+            <span>
+                Inspection 03
+            </span>
+
+            <h3>
+                End Geometry
+            </h3>
+
+            <ul>
+
+                <li>
+                    End Flatness
+                </li>
+
+                <li>
+                    Squareness
+                </li>
+
+                <li>
+                    Ground Surface Condition
+                </li>
+
+            </ul>
+
+        </div>
+
+
+
+        <div class="quality-card">
+
+            <span>
+                Inspection 04
+            </span>
+
+            <h3>
+                Visual Inspection
+            </h3>
+
+            <ul>
+
+                <li>
+                    Surface Damage
+                </li>
+
+                <li>
+                    Crack
+                </li>
+
+                <li>
+                    Corrosion
+                </li>
+
+                <li>
+                    Coating Defect
+                </li>
+
+            </ul>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     07 PROCESS IMPROVEMENT
+===================================================== -->
+
+<section id="improvement" class="section">
+
+    <p class="section-number">
+        07
+    </p>
+
+    <h2>
+        Process Improvement
+    </h2>
+
+
+    <p class="section-intro">
+
+        실제 생산현장에서 관찰한 제조공정 중
+        작업환경과 자동화 측면에서 개선 가능성이 있는
+        스프링 양단 연삭공정을 주요 개선 대상으로 선정하였다.
+
+    </p>
+
+
+
+    <div class="problem-box">
+
+        <h3>
+            Observed Problem
+        </h3>
+
+        <p>
+
+            스프링 끝단 연삭 과정에서는 연삭숫돌과 소재의 마찰로 인해
+            다량의 분진이 발생한다.
+
+            집진설비가 사용되고 있으나 작업자의 직접적인 작업 개입이
+            필요한 경우 분진 노출과 반복 작업 부담이 발생할 수 있다.
+
+            완전 자동화 설비는 이러한 문제를 줄일 수 있지만
+            중소 제조업체에서는 설비 투자비용이 부담이 될 수 있다.
+
+        </p>
+
+    </div>
+
+
+
+    <div class="comparison">
+
+
+        <div class="comparison-card">
+
+            <span>
+                CURRENT PROCESS
+            </span>
+
+            <h3>
+                Existing Grinding Process
+            </h3>
+
+            <ul>
+
+                <li>
+                    작업자의 직접적인 제품 공급
+                </li>
+
+                <li>
+                    반복 작업 발생
+                </li>
+
+                <li>
+                    연삭분진 발생
+                </li>
+
+                <li>
+                    작업환경 개선 필요
+                </li>
+
+                <li>
+                    자동화 설비 도입 시 높은 초기비용
+                </li>
+
+            </ul>
+
+        </div>
+
+
+
+        <div class="comparison-arrow">
+            →
+        </div>
+
+
+
+        <div class="comparison-card">
+
+            <span>
+                PROPOSED PROCESS
+            </span>
+
+            <h3>
+                Low-Cost Semi-Automated System
+            </h3>
+
+            <ul>
+
+                <li>
+                    Spring 자동 공급장치
+                </li>
+
+                <li>
+                    Guide / Fixture를 이용한 위치결정
+                </li>
+
+                <li>
+                    작업자 직접 접촉 감소
+                </li>
+
+                <li>
+                    집진구조 개선
+                </li>
+
+                <li>
+                    저비용 반자동화를 통한 생산성 향상
+                </li>
+
+            </ul>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     08 PRODUCTIVITY & COST
+===================================================== -->
+
+<section id="productivity" class="section">
+
+    <p class="section-number">
+        08
+    </p>
+
+    <h2>
+        Productivity & Cost Analysis
+    </h2>
+
+
+    <p class="section-intro">
+
+        기존 공정과 제안된 개선공정을
+        생산성, 작업자 개입, 품질 및 투자비 관점에서 비교한다.
+
+        실제 측정 데이터를 확보한 이후 아래 값을 수정한다.
+
+    </p>
+
+
+
+    <table class="comparison-table">
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    Item
+                </th>
+
+                <th>
+                    Existing Process
+                </th>
+
+                <th>
+                    Proposed Process
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+
+            <tr>
+
+                <td>
+                    Cycle Time
+                </td>
+
+                <td>
+                    측정값 입력
+                </td>
+
+                <td>
+                    예상값 입력
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Production Rate
+                </td>
+
+                <td>
+                    springs/hour
+                </td>
+
+                <td>
+                    springs/hour
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Operator Intervention
+                </td>
+
+                <td>
+                    High
+                </td>
+
+                <td>
+                    Reduced
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Dust Exposure
+                </td>
+
+                <td>
+                    Existing Condition
+                </td>
+
+                <td>
+                    Reduced
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Process Consistency
+                </td>
+
+                <td>
+                    Operator Dependent
+                </td>
+
+                <td>
+                    Improved
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Initial Investment
+                </td>
+
+                <td>
+                    Low
+                </td>
+
+                <td>
+                    Medium
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Automation Level
+                </td>
+
+                <td>
+                    Manual / Semi-Automatic
+                </td>
+
+                <td>
+                    Semi-Automatic
+                </td>
+
+            </tr>
+
+
+        </tbody>
+
+    </table>
+
+</section>
+
+
+
+<!-- =====================================================
+     09 PROJECT PROGRESS
+===================================================== -->
+
+<section id="progress" class="section">
+
+    <p class="section-number">
+        09
+    </p>
+
+    <h2>
+        Project Progress
+    </h2>
+
+
+    <p class="section-intro">
+
+        프로젝트 수행과정과 실제 조사활동을 기록한다.
+
+    </p>
+
+
+
+    <div class="timeline">
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                SEP 14
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Project Proposal
+                </h3>
+
+                <p>
+                    프로젝트 대상 제품 및 제조업체 선정.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                SEP
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Factory Contact
+                </h3>
+
+                <p>
+                    제조업체 연락 및 공장 방문 일정 협의.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                SEP
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Factory Visit
+                </h3>
+
+                <p>
+                    스프링 제조공장 방문 및 생산공정 조사.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                OCT
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Process Analysis
+                </h3>
+
+                <p>
+                    총 8개의 제조공정과 설비 및 공정조건 분석.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                OCT 26
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Progress Report
+                </h3>
+
+                <p>
+                    조사한 제조공정과 주요 분석 결과 정리.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                NOV
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Engineering Analysis
+                </h3>
+
+                <p>
+                    공정조건, 스프링 특성 및 생산성 계산.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                NOV
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Process Improvement
+                </h3>
+
+                <p>
+                    스프링 양단 연삭공정의 개선안 설계.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                DEC 07
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Final Presentation
+                </h3>
+
+                <p>
+                    최종 프로젝트 결과 발표.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="timeline-item">
+
+            <div class="timeline-date">
+                DEC 14
+            </div>
+
+            <div class="timeline-content">
+
+                <h3>
+                    Final Report
+                </h3>
+
+                <p>
+                    최종 보고서 제출 및 프로젝트 완료.
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     10 TEAM
+===================================================== -->
+
+<section id="team" class="section">
+
+    <p class="section-number">
+        10
+    </p>
+
+    <h2>
+        Team
+    </h2>
+
+
+    <div class="team-grid">
+
+
+        <div class="team-card">
+
+            <h3>
+                유승환
+            </h3>
+
+            <p>
+                역할 작성
+            </p>
+
+        </div>
+
+
+
+        <div class="team-card">
+
+            <h3>
+                최준석
+            </h3>
+
+            <p>
+                역할 작성
+            </p>
+
+        </div>
+
+
+
+        <div class="team-card">
+
+            <h3>
+                전상현
+            </h3>
+
+            <p>
+                역할 작성
+            </p>
+
+        </div>
+
+
+
+        <div class="team-card">
+
+            <h3>
+                Member 4
+            </h3>
+
+            <p>
+                역할 작성
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     11 REFERENCES
+===================================================== -->
+
+<section id="references" class="section">
+
+    <p class="section-number">
+        11
+    </p>
+
+    <h2>
+        References
+    </h2>
+
+
+    <ol class="reference-list">
+
+        <li>
+            Serope Kalpakjian, Manufacturing Engineering and Technology.
+        </li>
+
+        <li>
+            방문 제조업체 현장조사 및 관계자 인터뷰.
+        </li>
+
+        <li>
+            제품 및 생산설비 제조사 기술자료.
+        </li>
+
+        <li>
+            Spring Design 관련 기계설계 참고자료.
+        </li>
+
+        <li>
+            제조공정 및 연삭공정 관련 논문 및 기술자료.
+        </li>
+
+    </ol>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <p>
+        Manufacturing Analysis Project · 2026
+    </p>
+
+    <button id="topButton">
+        ↑ Top
+    </button>
+
+</footer>
+
+
+
+<script>
+
+    /* =====================================================
+       TOP BUTTON
+    ===================================================== */
+
+    const topButton =
+        document.getElementById("topButton");
+
+    topButton.addEventListener(
+        "click",
+        function () {
+
+            window.scrollTo({
+
+                top: 0,
+                behavior: "smooth"
+
+            });
+
+        }
+    );
+
+
+    /* =====================================================
+       NAVIGATION ACTIVE EFFECT
+    ===================================================== */
+
+    const sections =
+        document.querySelectorAll("section");
+
+    const navLinks =
+        document.querySelectorAll(".nav-inner a");
+
+
+    window.addEventListener(
+        "scroll",
+        function () {
+
+            let current = "";
+
+
+            sections.forEach(
+                section => {
+
+                    const sectionTop =
+                        section.offsetTop;
+
+                    if (
+                        window.pageYOffset
+                        >= sectionTop - 180
+                    ) {
+
+                        current =
+                            section.getAttribute("id");
+
+                    }
+
+                }
+            );
+
+
+            navLinks.forEach(
+                link => {
+
+                    link.style.fontWeight =
+                        "600";
+
+                    link.style.color =
+                        "";
+
+
+                    if (
+                        link.getAttribute("href")
+                        === "#" + current
+                    ) {
+
+                        link.style.fontWeight =
+                            "800";
+
+                        link.style.color =
+                            "#2563eb";
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
 
 </body>
-
 </html>
